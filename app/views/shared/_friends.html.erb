@@ -1,0 +1,14 @@
+<% if @friends.empty? %>
+  <h3><%= @user.name %> has NO FRIENDS!!</h3>
+<% else %>
+  <h3><%= @user.name %> has <%= @friends.length %> friends</h3>
+  <% @friends.each do |friend| %>
+    <p>
+      <%= friend[:name] %>
+      <%= link_to "View Profile", user_path(friend) %>
+      <% if current_user.friends.include?(friend) %>
+        <%= link_to "Delete Friend", friendship_path(friend), method: :delete %>
+      <% end %>
+    </p>
+  <% end %>
+<% end %>

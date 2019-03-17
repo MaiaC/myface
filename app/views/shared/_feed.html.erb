@@ -1,0 +1,13 @@
+<% if @feed_items.any? %>
+  <% @feed_items.each do |f| %>
+    <div>
+      <p><%= gravatar_for(f.user, size: 40) %><%= link_to f.user.name, user_path(f.user) %> said:</p>
+      <p><%= f.body %></p>
+      <p>Posted <%= time_ago_in_words(f.created_at) %> ago. <%= render "shared/like_button", post: f %></p>
+      <p><%= pluralize(f.likes.count, "Like") %></p>
+      <%= render "shared/comments", commentable: f %>
+      
+      <br />
+    </div>
+  <% end %>
+<% end %>

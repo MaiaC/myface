@@ -1,0 +1,12 @@
+<h1>MyFace - Friends</h1>
+<% if @friends.empty? %>
+  <h3>You have NO FRIENDS!!</h3>
+<% else %>
+  <h3>You have <%= @friends.length %> friends</h3>
+  <% @friends.each do |friend| %>
+    <p>
+      <%= friend[:first_name] %> <%= friend[:last_name] %>
+      <%= link_to "Delete Friend", friendship_path(friend), method: :delete %>
+    </p>
+  <% end %>
+<% end %>

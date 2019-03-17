@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MyFace2</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <% if user_signed_in? %>
+      <%= link_to "Home", root_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
+      <%= link_to "Log Out", destroy_user_session_path, method: :delete %>&nbsp;&nbsp;|&nbsp;&nbsp;
+      <%= link_to "#{current_user.pending_received.length} Friend Requests", friendships_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
+      <%= link_to "Profile", current_user %>
+    <% end %>
+    <% flash.each do |type, msg| %>
+      <p><%= type %>: <%= msg %></p>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>

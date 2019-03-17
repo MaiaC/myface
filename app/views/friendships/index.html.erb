@@ -1,0 +1,39 @@
+<h1>Friend Requests</h1>
+
+<h3>Requests awaiting your response</h3>
+<% @pending_received.each do |user| %>
+  <p>
+    <%= user.name %>
+    <%= link_to "Delete request", friendship_path(user), method: :delete %>
+    <%= link_to "Accept Request", friendship_path(user), method: :put %>
+  </p>
+<% end %>
+
+<h3>People who haven't responded to your request yet</h3>
+<% @pending_sent.each do |user| %>
+  <p>
+    <%= user.name %>
+    <%= link_to "Cancel request", friendship_path(user), method: :delete %>
+  </p>
+<% end %>
+
+<h3>People You May Know</h3>
+
+<ul>
+  <% @users.each do |u| %>
+    <% unless u == current_user || current_user.connection?(u) %>
+      <li><%= u.name %></li>
+      <% unless current_user.friends.include?(u.id) %>
+        <% if current_user.pending_received.include?(u.id) %>
+          Respond to friend request
+        <% elsif current_user.pending_sent.include?(u.id) %>
+          Awaiting response to your friend request
+        <% else %>
+          <%= link_to 'Add friend', friendships_path(friend_id: u.id), method: :post %>
+        <% end %>
+      <%= link_to "View Profile", user_path(u) %>
+      <% end %>
+      <br />
+    <% end %>
+  <% end %>
+</ul>

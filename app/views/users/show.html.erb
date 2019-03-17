@@ -1,0 +1,21 @@
+<h1><%= gravatar_for(@user) %><%= @user.name %></h1>
+<% unless @user == current_user %>
+  <% if @user.friends.include?(current_user) %>
+    <%= link_to "Delete Friend", friendship_path(@user), method: :delete %>
+  <% elsif current_user.pending_sent.include?(@user) %>
+    Awaiting response to your friend request
+  <% elsif current_user.pending_received.include?(@user) %>
+    <%= link_to "Respond to friend request", friendships_path %>
+  <% else %>
+    <%= link_to 'Add friend', friendships_path(friend_id: @user.id), method: :post %>
+  <% end %>
+<% end %>
+
+<div style="display: flex;">
+  <div style="width: 30%;">
+    <%= render "shared/friends" %>
+  </div>
+  <div style="width: 70%;">
+    <%= render "shared/feed" %>
+  </div>
+</div>
