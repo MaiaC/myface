@@ -14,7 +14,7 @@ class User < ApplicationRecord
   has_many :likes
   has_many :comments
 
-  after_create :send_welcome_mail
+  # after_create :send_welcome_mail
 
   def friends
     friends = friendships.map { |f| f.friend if f.accepted }.compact
